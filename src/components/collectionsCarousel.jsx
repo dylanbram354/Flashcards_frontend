@@ -23,22 +23,29 @@ const CollectionsCarousel = (props) => {
     }
 
     return(
-        <div className='row' style={{height: '20vh'}}>
-            <div className='col'>
-                <Button onClick={() => goToPreviousCollection()}>Previous Collection</Button>
+        <React.Fragment>
+            <div className='mt-4'>
+                <Card className='text-center w-50' style={{marginLeft:'auto', marginRight:'auto'}}>
+                    <Card.Body>
+                        <Card.Title>{props.collections[selectedIndex].name}</Card.Title>
+                        <Card.Text>
+                        {props.collections[selectedIndex].description}
+                        <br/>
+                        <br/>
+                        <Button onClick={() => {props.selectCollection(props.collections[selectedIndex].id)}}>Select</Button>
+                        </Card.Text>
+                    </Card.Body>
+                </Card>
             </div>
-            <Card style={{ maxWidth: '25%' }} className='col text-center'>
-                <Card.Body>
-                    <Card.Title>{props.collections[selectedIndex].name}</Card.Title>
-                    <Card.Text>
-                    {props.collections[selectedIndex].description}
-                    </Card.Text>
-                </Card.Body>
-            </Card>
-            <div className='col'>
-                <Button onClick={() => goToNextCollection()}>Next Collection</Button>
+            <div className='row mt-4'>
+                <div className='col text-center'>
+                    <Button onClick={() => goToPreviousCollection()}>Previous Collection</Button>
+                </div>
+                <div className='col text-center'>
+                    <Button onClick={() => goToNextCollection()}>Next Collection</Button>
+                </div>
             </div>
-        </div>
+        </React.Fragment>
     )
 }
 

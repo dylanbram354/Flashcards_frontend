@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import axios from 'axios'
+import axios from 'axios';
 
 const CardsCarousel = (props) => {
 
@@ -12,6 +12,7 @@ const CardsCarousel = (props) => {
 
     let getCardsInCollection = async (collectionId) => {
         let response = await axios.get(`http://127.0.0.1:8000/flashcards/investigate_collection/${collectionId}`);
+        console.log(response.data)
         setCards(response.data);
     }
 
@@ -35,6 +36,7 @@ const CardsCarousel = (props) => {
         if (window.confirm('Are you sure you want to delete?')){
             try{
                 let response = await axios.delete(`http://127.0.0.1:8000/flashcards/modify_card/${cardId}`);
+                goToNextCard();
                 await getCardsInCollection(props.collectionId);
             }
             catch(err){
@@ -57,13 +59,15 @@ const CardsCarousel = (props) => {
                                         <p>{props.collectionName} ({selectedCardIndex + 1}/{cards.length})</p>
                                     </div>
                                     <div className='col text-right'>
-                                        <Button variant='warning' onClick={() => alert('edit')}>Edit Card</Button>
+                                        <Button size='sm' variant='warning' onClick={() => alert('edit')}>Edit Card</Button>
                                     </div>
                                 </div>
-                                <Card.Title><h1>{cards[selectedCardIndex].word}</h1></Card.Title>
-                                <Card.Text>
-                                    <Button variant='success' onClick={()=>{alert(cards[selectedCardIndex].definition)}}>View Definition</Button>
-                                </Card.Text>
+                                <div className='jumbotron'>
+                                    <Card.Title><h1>{cards[selectedCardIndex].word}</h1></Card.Title>
+                                    <Card.Text>
+                                        <Button variant='success' onClick={()=>{alert(cards[selectedCardIndex].definition)}}>View Definition</Button>
+                                    </Card.Text>
+                                </div>
                                 <div className='row'>
                                     <div className='col text-left'>
                                     </div>

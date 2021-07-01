@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import CollectionsCarousel from './components/collectionsCarousel';
 import CardsCarousel from './components/cardsCarousel';
+import Alert from 'react-bootstrap/Alert'
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
   return (
     <div>
       <h1 className='text-center'>Welcome to the Flashcard App!</h1>
+      <Alert variant='danger'>TO DO: add modal/form for 'Edit Card' (use addCardForm as template, but add field for collectionId); make nicer modal for 'View Definition'</Alert>
       {collections.length>0 ? 
       <div>
         <CollectionsCarousel collections={collections} selectCollection={setSelectedCollectionId}/>

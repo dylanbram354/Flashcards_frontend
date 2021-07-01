@@ -38,10 +38,25 @@ const CardsCarousel = (props) => {
                     <div className='mt-4'>
                         <Card className='text-center w-50' style={{marginLeft:'auto', marginRight:'auto'}}>
                             <Card.Body>
+                                <div className='row'>
+                                    <div className='col text-left'>
+                                        <p>{selectedCardIndex}/{cards.length}</p>
+                                    </div>
+                                    <div className='col text-right'>
+                                        <Button variant='warning' onClick={() => alert('edit')}>Edit Card</Button>
+                                    </div>
+                                </div>
                                 <Card.Title>{cards[selectedCardIndex].word}</Card.Title>
                                 <Card.Text>
-                                    <Button onClick={()=>{alert('definition here')}}>View Definition</Button>
+                                    <Button variant='success' onClick={()=>{alert('definition here')}}>View Definition</Button>
                                 </Card.Text>
+                                <div className='row'>
+                                    <div className='col text-left'>
+                                    </div>
+                                    <div className='col text-right'>
+                                        <Button variant='danger' onClick={() => alert('delete')}>Delete Card</Button>
+                                    </div>
+                                </div>
                             </Card.Body>
                         </Card>
                     </div>

@@ -10,8 +10,8 @@ const CardsCarousel = (props) => {
 
     useEffect(() => {getCardsInCollection(props.collectionId)}, [props.collectionId])
 
-    let getCardsInCollection = async () => {
-        let response = await axios.get(`http://127.0.0.1:8000/flashcards/investigate_collection/${props.collectionId}`);
+    let getCardsInCollection = async (collectionId) => {
+        let response = await axios.get(`http://127.0.0.1:8000/flashcards/investigate_collection/${collectionId}`);
         setCards(response.data);
     }
 
@@ -31,6 +31,20 @@ const CardsCarousel = (props) => {
         setSelectedCardIndex(tempIndex)
     }
 
+    let deleteCard = async (cardId) => {
+        if (window.confirm('Are you sure you want to delete?')){
+            try{
+                let response = await axios.delete(`http://127.0.0.1:8000/flashcards/modify_card/${cardId}`);
+                await getCardsInCollection(props.collectionId);
+            }
+            catch(err){
+                alert(err)
+                return
+            }
+        }
+        else{return}
+    }
+
     return(
         <React.Fragment>
             {cards.length > 0 ?
@@ -40,21 +54,21 @@ const CardsCarousel = (props) => {
                             <Card.Body>
                                 <div className='row'>
                                     <div className='col text-left'>
-                                        <p>{selectedCardIndex}/{cards.length}</p>
+                                        <p>{props.collectionName} ({selectedCardIndex + 1}/{cards.length})</p>
                                     </div>
                                     <div className='col text-right'>
                                         <Button variant='warning' onClick={() => alert('edit')}>Edit Card</Button>
                                     </div>
                                 </div>
-                                <Card.Title>{cards[selectedCardIndex].word}</Card.Title>
+                                <Card.Title><h1>{cards[selectedCardIndex].word}</h1></Card.Title>
                                 <Card.Text>
-                                    <Button variant='success' onClick={()=>{alert('definition here')}}>View Definition</Button>
+                                    <Button variant='success' onClick={()=>{alert(cards[selectedCardIndex].definition)}}>View Definition</Button>
                                 </Card.Text>
                                 <div className='row'>
                                     <div className='col text-left'>
                                     </div>
                                     <div className='col text-right'>
-                                        <Button variant='danger' onClick={() => alert('delete')}>Delete Card</Button>
+                                        <Button variant='danger' onClick={() => deleteCard(cards[selectedCardIndex].id)}>Delete Card</Button>
                                     </div>
                                 </div>
                             </Card.Body>
@@ -69,7 +83,7 @@ const CardsCarousel = (props) => {
                         </div>
                     </div>
                 </React.Fragment>
-                : ''}
+                : <p className='text-center'>No cards in collection {props.collectionName}. Select a different collection or add a card.</p>}
         </React.Fragment>
         
     )

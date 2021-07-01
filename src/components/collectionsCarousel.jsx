@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card'
 const CollectionsCarousel = (props) => {
 
     const [selectedIndex, setSelectedIndex] = useState(0)
+    const [collectionName, setCollectionName] = useState(null)
 
     let goToPreviousCollection = () => {
         let tempIndex = selectedIndex - 1;
@@ -32,19 +33,23 @@ const CollectionsCarousel = (props) => {
                         {props.collections[selectedIndex].description}
                         <br/>
                         <br/>
-                        <Button onClick={() => {props.selectCollection(props.collections[selectedIndex].id)}}>Select</Button>
+                        <div className='row mt-4'>
+                            <div className='col-12 col-md'>
+                                <Button size='sm' onClick={() => goToPreviousCollection()}>Previous Collection</Button>
+                            </div>
+                            <div className='col-12 col-md mt-2 mt-md-0 mb-2 mb-md-0'>
+                                <Button variant='success' onClick={() => {props.selectCollection(props.collections[selectedIndex].id); 
+                                    setCollectionName(props.collections[selectedIndex].name)}}>Select</Button>
+                            </div>
+                            <div className='col-12 col-md'>
+                                <Button size='sm' onClick={() => goToNextCollection()}>Next Collection</Button>
+                            </div>
+                        </div>
                         </Card.Text>
                     </Card.Body>
                 </Card>
             </div>
-            <div className='row mt-4'>
-                <div className='col text-center'>
-                    <Button onClick={() => goToPreviousCollection()}>Previous Collection</Button>
-                </div>
-                <div className='col text-center'>
-                    <Button onClick={() => goToNextCollection()}>Next Collection</Button>
-                </div>
-            </div>
+            {collectionName ? <h3 className='text-center mt-4'>{collectionName} selected!</h3> : ''}
         </React.Fragment>
     )
 }

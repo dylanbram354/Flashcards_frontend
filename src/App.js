@@ -29,15 +29,24 @@ function App() {
     }
   }
 
+  let getCollectionNameById = (id) => {
+    let result = collections.filter((item) => {
+      return (item.id === id);
+    })
+    return result[0].name
+  }
+
   return (
     <div>
       <h1 className='text-center'>Welcome to the Flashcard App!</h1>
       {collections.length>0 ? 
+      <div>
         <CollectionsCarousel collections={collections} selectCollection={setSelectedCollectionId}/>
+      </div>
         :
         <p className='text-center'>Loading Collections...</p>}
       {selectedCollectionId != 'none' ? 
-        <CardsCarousel collectionId={selectedCollectionId}/>
+        <CardsCarousel collectionId={selectedCollectionId} collectionName={getCollectionNameById(selectedCollectionId)}/>
         :
         <p className='text-center'>Select a collection to see your cards.</p>}
     </div>

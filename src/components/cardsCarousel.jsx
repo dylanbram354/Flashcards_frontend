@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
+import DefinitionModal from './definitionModal';
+import EditCardForm from './editCardForm';
 
 const CardsCarousel = (props) => {
 
@@ -12,7 +14,6 @@ const CardsCarousel = (props) => {
 
     let getCardsInCollection = async (collectionId) => {
         let response = await axios.get(`http://127.0.0.1:8000/flashcards/investigate_collection/${collectionId}`);
-        console.log(response.data)
         setCards(response.data);
     }
 
@@ -35,7 +36,7 @@ const CardsCarousel = (props) => {
     let deleteCard = async (cardId) => {
         if (window.confirm('Are you sure you want to delete?')){
             try{
-                let response = await axios.delete(`http://127.0.0.1:8000/flashcards/modify_card/${cardId}`);
+                await axios.delete(`http://127.0.0.1:8000/flashcards/modify_card/${cardId}`);
                 goToNextCard();
                 await getCardsInCollection(props.collectionId);
             }
@@ -54,25 +55,29 @@ const CardsCarousel = (props) => {
                     <div className='mt-4'>
                         <Card className='text-center w-50' style={{marginLeft:'auto', marginRight:'auto'}}>
                             <Card.Body>
-                                <div className='row'>
+                                <div className='row text-muted'>
                                     <div className='col text-left'>
-                                        <p>{props.collectionName} ({selectedCardIndex + 1}/{cards.length})</p>
+                                        <p>({selectedCardIndex + 1}/{cards.length})</p>
+                                    </div>
+                                    <div className='col text-center'>
+                                        <p>{props.collectionName}</p>
                                     </div>
                                     <div className='col text-right'>
-                                        <Button size='sm' variant='warning' onClick={() => alert('edit')}>Edit Card</Button>
+                                        <EditCardForm selectCollection={props.selectCollection} currentCollection={props.collectionName} collections={props.collections} 
+                                        word={cards[selectedCardIndex].word} definition={cards[selectedCardIndex].definition} cardId={cards[selectedCardIndex].id} />
                                     </div>
                                 </div>
                                 <div className='jumbotron'>
                                     <Card.Title><h1>{cards[selectedCardIndex].word}</h1></Card.Title>
                                     <Card.Text>
-                                        <Button variant='success' onClick={()=>{alert(cards[selectedCardIndex].definition)}}>View Definition</Button>
+                                        <DefinitionModal word={cards[selectedCardIndex].word} definition={cards[selectedCardIndex].definition} />
                                     </Card.Text>
                                 </div>
                                 <div className='row'>
                                     <div className='col text-left'>
                                     </div>
                                     <div className='col text-right'>
-                                        <Button variant='danger' onClick={() => deleteCard(cards[selectedCardIndex].id)}>Delete Card</Button>
+                                        <Button size='sm' variant='outline-danger' onClick={() => deleteCard(cards[selectedCardIndex].id)}>Delete</Button>
                                     </div>
                                 </div>
                             </Card.Body>

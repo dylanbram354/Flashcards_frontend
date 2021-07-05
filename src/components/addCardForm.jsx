@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import useForm from './useForm';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
@@ -15,10 +15,9 @@ const AddCardForm = (props) => {
     const handleShow = () => setShow(true);
 
     async function submitCard(){
-        let newCard = {...values}
-        console.log(newCard)
+        let newCard = {...values};
         try{
-            let response = await axios.post(`http://127.0.0.1:8000/flashcards/investigate_collection/${props.collectionId}`, newCard);
+            await axios.post(`http://127.0.0.1:8000/flashcards/investigate_collection/${props.collectionId}`, newCard);
             setSubmitted(true);
             setTimeout(() => {setShow(false); setSubmitted(false)}, 700);
             props.selectCollection('none');
@@ -32,8 +31,8 @@ const AddCardForm = (props) => {
 
     return(
         <>
-            <Button size='sm' variant="primary" onClick={handleShow}>
-                Add Card to Collection
+            <Button size='sm' variant="outline-info" onClick={handleShow}>
+                Add Card
             </Button>
 
             <Modal show={show} onHide={handleClose}>

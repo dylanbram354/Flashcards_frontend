@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import AddCardForm from './addCardForm'
@@ -26,7 +26,13 @@ const CollectionsCarousel = (props) => {
 
     return(
         <React.Fragment>
+            {collectionName ? 
+            <div className='text-center'>
+                <Button className='mt-4 mb-4' variant='outline-secondary' onClick={() => {setCollectionName(null); props.selectCollection('none')}}>Back to Collections</Button>
+            </div>
+            : 
             <div className='mt-4'>
+                <h3 className='text-center'>Select a collection to view its cards.</h3>
                 <Card className='text-center w-50' style={{marginLeft:'auto', marginRight:'auto'}}>
                     <div className='text-right mt-2 mr-2'>
                         <AddCardForm selectCollection={props.selectCollection} collectionId={props.collections[selectedIndex].id}/>
@@ -36,23 +42,24 @@ const CollectionsCarousel = (props) => {
                             <Card.Title>{props.collections[selectedIndex].name}</Card.Title>
                             <p>{props.collections[selectedIndex].description}</p>
                         </div>
-                        <Card.Text>
-                        <div className='row mt-4'>
-                            <div className='col-12 col-md'>
-                                <Button size='sm' onClick={() => goToPreviousCollection()}>Previous</Button>
-                            </div>
-                            <div className='col-12 col-md mt-2 mt-md-0 mb-2 mb-md-0'>
-                                <Button size='lg' variant='success' onClick={() => {props.selectCollection(props.collections[selectedIndex].id); 
-                                    setCollectionName(props.collections[selectedIndex].name)}}>View Cards</Button>
-                            </div>
-                            <div className='col-12 col-md'>
-                                <Button size='sm' onClick={() => goToNextCollection()}>Next</Button>
+                        <div>
+                            <div className='row mt-4'>
+                                <div className='col-12 col-md'>
+                                    <Button size='sm' onClick={() => goToPreviousCollection()}>Previous</Button>
+                                </div>
+                                <div className='col-12 col-md mt-2 mt-md-0 mb-2 mb-md-0'>
+                                    <Button size='lg' variant='success' onClick={() => {props.selectCollection(props.collections[selectedIndex].id); 
+                                        setCollectionName(props.collections[selectedIndex].name)}}>View Cards</Button>
+                                </div>
+                                <div className='col-12 col-md'>
+                                    <Button size='sm' onClick={() => goToNextCollection()}>Next</Button>
+                                </div>
                             </div>
                         </div>
-                        </Card.Text>
                     </Card.Body>
                 </Card>
-            </div>
+            </div> 
+            }
             {/* {collectionName ? <h3 className='text-center mt-4'>{collectionName} selected! <br /> Displaying cards:</h3> : ''} */}
         </React.Fragment>
     )

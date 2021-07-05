@@ -1,4 +1,3 @@
-import { Callbacks } from 'jquery';
 import { useState } from 'react'
 
 const useForm = (callback) => {
@@ -16,7 +15,7 @@ const useForm = (callback) => {
         setValues({})
     }
 
-    return { values, handleChange, handleSubmit}
+    return { values, handleChange, handleSubmit, setValues}
 }
 
 export default useForm

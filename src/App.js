@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import CollectionsCarousel from './components/collectionsCarousel';
 import CardsCarousel from './components/cardsCarousel';
-import Alert from 'react-bootstrap/Alert'
 
 
 function App() {

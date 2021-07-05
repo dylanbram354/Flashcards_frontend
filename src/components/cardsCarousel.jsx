@@ -48,6 +48,12 @@ const CardsCarousel = (props) => {
         else{return}
     }
 
+    let editCardInState = (newCard) => {
+        let newCards = cards.slice();
+        newCards[selectedCardIndex] = newCard;
+        setCards(newCards);
+    }
+
     return(
         <React.Fragment>
             {cards.length > 0 ?
@@ -60,12 +66,12 @@ const CardsCarousel = (props) => {
                                         <p>({selectedCardIndex + 1}/{cards.length})</p>
                                     </div>
                                     <div className='col text-center'>
-                                        <p>{props.collectionName}</p>
+                                        <p className='font-weight-light'>{props.collectionName}</p>
                                     </div>
                                     <div className='col-md' />
                                 </div>
                                 <div className='jumbotron'>
-                                    <Card.Title><h3>{cards[selectedCardIndex].word}</h3></Card.Title>
+                                    <Card.Title><h6>{cards[selectedCardIndex].word}</h6></Card.Title>
                                     <Card.Text>
                                         <DefinitionModal word={cards[selectedCardIndex].word} definition={cards[selectedCardIndex].definition} />
                                     </Card.Text>
@@ -76,7 +82,8 @@ const CardsCarousel = (props) => {
                                     </div>
                                     <div className='col text-right'>
                                         <EditCardForm selectCollection={props.selectCollection} currentCollection={props.collectionName} collections={props.collections} 
-                                        word={cards[selectedCardIndex].word} definition={cards[selectedCardIndex].definition} cardId={cards[selectedCardIndex].id} />
+                                        word={cards[selectedCardIndex].word} definition={cards[selectedCardIndex].definition} cardId={cards[selectedCardIndex].id} 
+                                        setNewCards={editCardInState}/>
                                     </div>
                                 </div>
                             </Card.Body>
@@ -85,15 +92,15 @@ const CardsCarousel = (props) => {
                     <div className='row mt-4'>
                         <div className='col text-right'>
                             <Button variant='outline-primary' size='lg' onClick={() => goToPreviousCard()}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
+                                <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
                             </svg>
                             </Button>
                         </div>
                         <div className='col text-left'>
                             <Button variant='outline-primary' size='lg' onClick={() => goToNextCard()}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
                             </svg>
                             </Button>
                         </div>

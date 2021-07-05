@@ -19,9 +19,9 @@ const EditCardForm = (props) => {
         let collectionId = (props.collections.filter(item => {return item.name === values.collection}))[0].id;
         let newCard = {...values, collection: collectionId};
         try{
-            await axios.put(`http://127.0.0.1:8000/flashcards/modify_card/${props.cardId}`, newCard);
+            let response = await axios.put(`http://127.0.0.1:8000/flashcards/modify_card/${props.cardId}`, newCard);
             setSubmitted(true);
-            setTimeout(() => {setShow(false); setSubmitted(false); props.selectCollection('none')}, 800);
+            setTimeout(() => {setShow(false); setSubmitted(false); props.setNewCards(response.data)}, 800);
         }
         catch(err){
             alert(err);

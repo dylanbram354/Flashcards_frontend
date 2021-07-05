@@ -16,7 +16,9 @@ const CardsCarousel = (props) => {
 
     let getCardsInCollection = async (collectionId) => {
         let response = await axios.get(`http://127.0.0.1:8000/flashcards/investigate_collection/${collectionId}`);
-        setCards(response.data);
+        if (response.data){setCards(response.data)}
+        else{setCards([])}
+        ;
     }
 
     let goToPreviousCard = () => {

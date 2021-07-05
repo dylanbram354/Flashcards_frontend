@@ -121,7 +121,7 @@ const CardsCarousel = (props) => {
                         </div>
                     </div>
                 </React.Fragment>
-                : <p className='text-center'>No cards in collection {props.collectionName}. Select a different collection or add a card.</p>}
+                : <p className='text-center mt-4'>You have not added any cards to {props.collectionName}. Select a different collection or add a card.</p>}
         </React.Fragment>
         
     )

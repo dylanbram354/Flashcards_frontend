@@ -5,7 +5,8 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form'
 
-const AddCardForm = (props) => {
+
+const AddCollectionForm = (props) => {
 
     const { values, handleChange, handleSubmit } = useForm(submitCard);
     const [show, setShow] = useState(false);
@@ -15,12 +16,12 @@ const AddCardForm = (props) => {
     const handleShow = () => setShow(true);
 
     async function submitCard(){
-        let newCard = {...values};
+        let newCollection = {...values};
         try{
-            await axios.post(`http://127.0.0.1:8000/flashcards/investigate_collection/${props.collectionId}`, newCard);
+            await axios.post(`http://127.0.0.1:8000/flashcards/collections`, newCollection);
             setSubmitted(true);
             setTimeout(() => {setShow(false); setSubmitted(false)}, 700);
-            props.selectCollection('none');
+            props.refresh()
         }
         catch(err){
             alert(err);
@@ -31,30 +32,32 @@ const AddCardForm = (props) => {
 
     return(
         <>
-            <Button size='sm' variant="outline-primary" onClick={handleShow}>
-                Add Card
-            </Button>
+            <div className='text-center mt-5'>
+                <Button size='lg' variant="outline-warning" onClick={handleShow}>
+                    New Collection
+                </Button>
+            </div>
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                <Modal.Title>Add New Flashcard</Modal.Title>
+                <Modal.Title>Add Collection</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form onSubmit={handleSubmit}>
                         <Form.Group controlId="word">
-                            <Form.Label>Word</Form.Label>
-                            <Form.Control type="text" placeholder="Enter word here" name='word' onChange={handleChange} value={values.word} required={true}/>
+                            <Form.Label>Name</Form.Label>
+                            <Form.Control type="text" placeholder="Enter name of new collection" name='name' onChange={handleChange} value={values.word} required={true}/>
                         </Form.Group>
                         <Form.Group controlId="definition">
-                            <Form.Label>Definition</Form.Label>
-                            <Form.Control type="text" placeholder="Enter definition here" name='definition' onChange={handleChange} value={values.definition} required={true}/>
+                            <Form.Label>Description</Form.Label>
+                            <Form.Control type="text" placeholder="Enter description here" name='description' onChange={handleChange} value={values.definition} required={true}/>
                         </Form.Group>
                         <div className='row'>
                             <div className='col-md-8 col-0'></div>
                             <Button variant="secondary" className='mr-2' onClick={handleClose}>
                                 Close
                             </Button>
-                            {submitted ? <h4 className='text-center'>Added!</h4> : <Button type='submit' variant="primary">Submit</Button>}
+                            {submitted ? <p className='text-center'>Submitted!</p> : <Button type='submit' variant="primary">Submit</Button>}
                         </div>
                     </Form>
                 </Modal.Body>
@@ -63,4 +66,4 @@ const AddCardForm = (props) => {
     )
 }
 
-export default AddCardForm
+export default AddCollectionForm

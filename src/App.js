@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import CollectionsCarousel from './components/collectionsCarousel';
 import CardsCarousel from './components/cardsCarousel';
+import AddCollectionForm from './components/addCollectionForm';
 
 
 function App() {
@@ -38,10 +39,12 @@ function App() {
 
   return (
     <div>
-      <h1 className='text-center'>Welcome to the Flashcard App!</h1>
+      <h1 className='text-center'>FlashCards</h1>
       {collections.length>0 ? 
       <div>
         <CollectionsCarousel collections={collections} selectCollection={setSelectedCollectionId}/>
+        {selectedCollectionId === 'none' ? <AddCollectionForm refresh={getCollections}/> : ''}
+        
       </div>
         :
         <p className='text-center'>Loading Collections...</p>}

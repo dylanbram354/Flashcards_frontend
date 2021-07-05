@@ -31,7 +31,7 @@ const AddCardForm = (props) => {
 
     return(
         <>
-            <Button size='sm' variant="outline-info" onClick={handleShow}>
+            <Button size='sm' variant="outline-warning" onClick={handleShow}>
                 Add Card
             </Button>
 

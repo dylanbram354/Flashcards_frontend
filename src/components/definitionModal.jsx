@@ -12,7 +12,7 @@ const DefinitionModal = (props) => {
     return (
         <>
           <Button variant="success" onClick={handleShow}>
-            Show Definition
+            Definition
           </Button>
     
           <Modal show={show} onHide={handleClose}>

@@ -39,7 +39,7 @@ const EditCardForm = (props) => {
 
     return(
         <>
-            <Button size='sm' variant="primary" onClick={handleShow}>
+            <Button size='sm' variant="outline-warning" onClick={handleShow}>
                 Edit
             </Button>
 

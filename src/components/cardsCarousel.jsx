@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
-import DefinitionModal from './definitionModal';
+// import DefinitionModal from './definitionModal';
 import EditCardForm from './editCardForm';
 import ReactCardFlip from 'react-card-flip';
 

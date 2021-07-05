@@ -20,7 +20,6 @@ const AddCardForm = (props) => {
             await axios.post(`http://127.0.0.1:8000/flashcards/investigate_collection/${props.collectionId}`, newCard);
             setSubmitted(true);
             setTimeout(() => {setShow(false); setSubmitted(false)}, 700);
-            props.selectCollection('none');
         }
         catch(err){
             alert(err);

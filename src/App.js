@@ -21,7 +21,7 @@ function App() {
         setCollections(response.data)
       }
       else{
-        alert('No collections found!')
+        setCollections([]);
       }
     }
     catch (err){
@@ -42,12 +42,15 @@ function App() {
       <h1 className='text-center'>FlashCards</h1>
       {collections.length>0 ? 
       <div>
-        <CollectionsCarousel collections={collections} selectCollection={setSelectedCollectionId}/>
+        <CollectionsCarousel collections={collections} selectCollection={setSelectedCollectionId} refresh={getCollections}/>
         {selectedCollectionId === 'none' ? <AddCollectionForm refresh={getCollections}/> : ''}
         
       </div>
         :
-        <p className='text-center'>Loading Collections...</p>}
+      <div>
+        <p className='text-center'>No Collections found.</p>
+        <AddCollectionForm refresh={getCollections}/>
+      </div>}
       {selectedCollectionId !== 'none' ? 
         <CardsCarousel collections={collections} collectionId={selectedCollectionId} collectionName={getCollectionNameById(selectedCollectionId)} selectCollection={setSelectedCollectionId}/>
         :

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import AddCardForm from './addCardForm'
+import AddCardForm from './addCardForm';
+import axios from 'axios'
 
 const CollectionsCarousel = (props) => {
 
@@ -24,6 +25,21 @@ const CollectionsCarousel = (props) => {
         setSelectedIndex(tempIndex)
     }
 
+    let deleteCollection = async (id) => {
+        if (window.confirm('Are you sure? All cards in this collection will be deleted.')){
+            try{
+                let response = await axios.delete(`http://127.0.0.1:8000/flashcards/collections/info/${id}`);
+                console.log(response);
+                goToNextCollection();
+                props.refresh();
+            }
+            catch(err){
+                alert(err);
+            }
+        }
+        else {return}
+    }
+
     return(
         <React.Fragment>
             {collectionName ? 
@@ -38,7 +54,7 @@ const CollectionsCarousel = (props) => {
                         <div className='row text-muted' >
                             <div className='col text-left mt-2 ml-2'><p>{selectedIndex+1}/{props.collections.length}</p></div>
                             <div className='col text-right mt-2 mr-2'>
-                                <AddCardForm selectCollection={props.selectCollection} collectionId={props.collections[selectedIndex].id}/>
+                                <AddCardForm selectCollection={props.selectCollection} collectionId={props.collections[selectedIndex].id} collection={props.collections[selectedIndex].name}/>
                             </div>
                         </div>
                         <Card.Body>
@@ -46,13 +62,12 @@ const CollectionsCarousel = (props) => {
                                 <Card.Title>{props.collections[selectedIndex].name}</Card.Title>
                                 <p>{props.collections[selectedIndex].description}</p>
                             </div>
-                            <div>
-                                <div className='row mt-4'>
-                                    <div className='col-12 col-md mt-2 mt-md-0 mb-2 mb-md-0'>
-                                        <Button size='lg' variant='success' onClick={() => {props.selectCollection(props.collections[selectedIndex].id); 
-                                            setCollectionName(props.collections[selectedIndex].name)}}>View Cards</Button>
-                                    </div>
-                                </div>
+                            <div className='text-center'>
+                                <Button size='lg' variant='success' onClick={() => {props.selectCollection(props.collections[selectedIndex].id); 
+                                    setCollectionName(props.collections[selectedIndex].name)}}>Open Collection</Button>
+                            </div>
+                            <div className='text-center mt-2'>
+                                <Button size='sm' variant='outline-danger' onClick={() => {deleteCollection(props.collections[selectedIndex].id)}}>Delete</Button>
                             </div>
                         </Card.Body>
                     </Card>

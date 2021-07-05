@@ -53,9 +53,18 @@ const CardsCarousel = (props) => {
     }
 
     let editCardInState = (newCard) => {
-        let newCards = cards.slice();
-        newCards[selectedCardIndex] = newCard;
-        setCards(newCards);
+        if (newCard.collection === props.collectionId){
+            let newCards = cards.slice();
+            newCards[selectedCardIndex] = newCard;
+            setCards(newCards);
+        }
+        else{
+            let newCards = cards.slice().filter(card => {return card.id !== newCard.id});
+            console.log(newCards);
+            goToNextCard();
+            setCards(newCards);
+        }
+        
     }
 
     return(

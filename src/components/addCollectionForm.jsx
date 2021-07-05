@@ -46,11 +46,11 @@ const AddCollectionForm = (props) => {
                     <Form onSubmit={handleSubmit}>
                         <Form.Group controlId="word">
                             <Form.Label>Name</Form.Label>
-                            <Form.Control type="text" placeholder="Enter name of new collection" name='name' onChange={handleChange} value={values.word} required={true}/>
+                            <Form.Control type="text" placeholder="Enter a name for your new collection" name='name' onChange={handleChange} value={values.word} required={true}/>
                         </Form.Group>
                         <Form.Group controlId="definition">
                             <Form.Label>Description</Form.Label>
-                            <Form.Control type="text" placeholder="Enter description here" name='description' onChange={handleChange} value={values.definition} required={true}/>
+                            <Form.Control type="text" placeholder="Enter collection description" name='description' onChange={handleChange} value={values.definition} required={true}/>
                         </Form.Group>
                         <div className='row'>
                             <div className='col-md-8 col-0'></div>

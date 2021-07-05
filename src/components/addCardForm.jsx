@@ -54,8 +54,7 @@ const AddCardForm = (props) => {
                             <Button variant="secondary" className='mr-2' onClick={handleClose}>
                                 Close
                             </Button>
-                            {submitted ? <h4 className='text-center'>Added!</h4> : <Button type='submit' variant="primary">Submit</Button>}  
-                            
+                            {submitted ? <h4 className='text-center'>Added!</h4> : <Button type='submit' variant="primary">Submit</Button>}
                         </div>
                     </Form>
                 </Modal.Body>

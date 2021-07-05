@@ -28,7 +28,7 @@ const CollectionsCarousel = (props) => {
         <React.Fragment>
             {collectionName ? 
             <div className='text-center'>
-                <Button variant='outline-secondary' onClick={() => {setCollectionName(null); props.selectCollection('none')}}>View Collections</Button>
+                <Button variant='outline-secondary' onClick={() => {setCollectionName(null); props.selectCollection('none')}}>Back to Collections</Button>
             </div>
             : 
             <React.Fragment>
@@ -72,7 +72,6 @@ const CollectionsCarousel = (props) => {
                 </div>
             </React.Fragment>
             }
-            {/* {collectionName ? <h3 className='text-center mt-4'>{collectionName} selected! <br /> Displaying cards:</h3> : ''} */}
         </React.Fragment>
     )
 }

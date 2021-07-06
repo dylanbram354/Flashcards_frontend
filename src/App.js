@@ -7,7 +7,7 @@ import AddCollectionForm from './components/addCollectionForm';
 
 function App() {
 
-  const [collections, setCollections] = useState([]);
+  const [collections, setCollections] = useState(null);
   const [selectedCollectionId, setSelectedCollectionId] = useState('none')
 
   useEffect(() => {
@@ -39,22 +39,27 @@ function App() {
 
   return (
     <div>
-      <h1 className='text-center'>FlashCards</h1>
-      {collections.length>0 ? 
-      <div>
-        <CollectionsCarousel collections={collections} selectCollection={setSelectedCollectionId} refresh={getCollections}/>
-        {selectedCollectionId === 'none' ? <AddCollectionForm refresh={getCollections}/> : ''}
-        
-      </div>
-        :
-      <div>
-        <p className='text-center'>No Collections found.</p>
-        <AddCollectionForm refresh={getCollections}/>
-      </div>}
-      {selectedCollectionId !== 'none' ? 
-        <CardsCarousel collections={collections} collectionId={selectedCollectionId} collectionName={getCollectionNameById(selectedCollectionId)} selectCollection={setSelectedCollectionId}/>
-        :
-        ''}
+      {collections ? 
+        <React.Fragment>
+          <h1 className='text-center'>FlashCards</h1>
+          {collections.length>0 ? 
+          <div>
+            <CollectionsCarousel collections={collections} selectCollection={setSelectedCollectionId} refresh={getCollections}/>
+            {selectedCollectionId === 'none' ? <AddCollectionForm refresh={getCollections}/> : ''}
+            
+          </div>
+            :
+          <div>
+            <p className='text-center'>No Collections found.</p>
+            <AddCollectionForm refresh={getCollections}/>
+          </div>}
+          {selectedCollectionId !== 'none' ? 
+            <CardsCarousel collections={collections} collectionId={selectedCollectionId} collectionName={getCollectionNameById(selectedCollectionId)} selectCollection={setSelectedCollectionId}/>
+            :
+            ''}
+        </React.Fragment> 
+        : 
+        <h3 className='text-center'>Loading...</h3>}
     </div>
   );
 }

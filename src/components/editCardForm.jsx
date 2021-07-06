@@ -32,8 +32,8 @@ const EditCardForm = (props) => {
     const generateCollectionOptions = (currentCollectionName) =>{
         let collectionNames = props.collections.map(item => {return item.name});
         collectionNames = collectionNames.filter(item => {return (item !== currentCollectionName)});
-        let jsx = collectionNames.map(item => {return <option>{item}</option>});
-        jsx.unshift(<option>{currentCollectionName}</option>);
+        let jsx = collectionNames.map(item => {return <option key={item}>{item}</option>});
+        jsx.unshift(<option key={currentCollectionName}>{currentCollectionName}</option>);
         return jsx
     }
 

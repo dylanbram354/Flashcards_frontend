@@ -60,8 +60,8 @@ const CardsCarousel = (props) => {
         }
         else{
             let newCards = cards.slice().filter(card => {return card.id !== newCard.id});
-            console.log(newCards);
-            goToNextCard();
+            // goToNextCard();
+            setSelectedCardIndex(0);
             setCards(newCards);
         }
         
@@ -79,16 +79,13 @@ const CardsCarousel = (props) => {
                                         <div className='col text-left'>
                                             <p>({selectedCardIndex + 1}/{cards.length})</p>
                                         </div>
-                                        <div className='col text-center'>
+                                        <div className='col text-right'>
                                             <p className='font-weight-light'>{props.collectionName}</p>
                                         </div>
-                                        <div className='col-md' />
                                     </div>
                                     <div className='jumbotron'>
-                                        <Card.Title><h6>{cards[selectedCardIndex].word}</h6></Card.Title>
-                                        <Card.Text>
-                                            <Button variant='success' onClick={()=> handleFlip(true)}>Flip</Button>
-                                        </Card.Text>
+                                        <h6>{cards[selectedCardIndex].word}</h6>
+                                        <Button variant='success' onClick={()=> handleFlip(true)}>Flip</Button>
                                     </div>
                                     <div className='row'>
                                         <div className='col text-left'>
@@ -106,10 +103,8 @@ const CardsCarousel = (props) => {
                             <Card className='text-center w-50' style={{marginLeft:'auto', marginRight:'auto'}}>
                                 <Card.Body>
                                     <div className='jumbotron'>
-                                        <Card.Text>
-                                            <p>{cards[selectedCardIndex].definition}</p>
-                                            <Button variant='success' onClick={() => handleFlip(false)}>Flip</Button>
-                                        </Card.Text>
+                                        <p>{cards[selectedCardIndex].definition}</p>
+                                        <Button variant='success' onClick={() => handleFlip(false)}>Flip</Button>
                                     </div>
                                 </Card.Body>
                             </Card>

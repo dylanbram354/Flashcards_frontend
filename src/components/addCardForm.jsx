@@ -31,7 +31,7 @@ const AddCardForm = (props) => {
     return(
         <>
             <Button size='sm' variant="outline-primary" onClick={handleShow}>
-                Add Card to {props.collection}
+                Add Card
             </Button>
 
             <Modal show={show} onHide={handleClose}>

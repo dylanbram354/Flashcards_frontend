@@ -50,14 +50,14 @@ const CollectionsCarousel = (props) => {
             <React.Fragment>
                 <div className='mt-4'>
                     <p className='text-center'>Select a collection to view its cards.</p>
-                    <Card className='text-center w-50' style={{marginLeft:'auto', marginRight:'auto', maxHeight:'60vh'}}>
-                        <div className='row text-muted' >
-                            <div className='col text-left mt-2 ml-2'><p>{selectedIndex+1}/{props.collections.length}</p></div>
-                            <div className='col text-right mt-2 mr-2'>
-                                <AddCardForm selectCollection={props.selectCollection} collectionId={props.collections[selectedIndex].id} collection={props.collections[selectedIndex].name}/>
-                            </div>
-                        </div>
+                    <Card className='text-center w-50' style={{marginLeft:'auto', marginRight:'auto'}}>
                         <Card.Body>
+                            <div className='row text-muted' >
+                                <div className='col-3 col-md text-left'><p>{selectedIndex+1}/{props.collections.length}</p></div>
+                                <div className='col-9 col-md text-right'>
+                                    <AddCardForm selectCollection={props.selectCollection} collectionId={props.collections[selectedIndex].id} collection={props.collections[selectedIndex].name}/>
+                                </div>
+                            </div>
                             <div className='jumbotron'>
                                 <Card.Title>{props.collections[selectedIndex].name}</Card.Title>
                                 <p>{props.collections[selectedIndex].description}</p>

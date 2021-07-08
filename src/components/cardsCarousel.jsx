@@ -5,14 +5,33 @@ import axios from 'axios';
 // import DefinitionModal from './definitionModal';
 import EditCardForm from './editCardForm';
 import ReactCardFlip from 'react-card-flip';
+import Form from 'react-bootstrap/Form';
+import useForm from './useForm';
 
 const CardsCarousel = (props) => {
 
-    const [selectedCardIndex, setSelectedCardIndex] = useState(0)
-    const [cards, setCards] = useState([])
-    const [isFlipped, handleFlip] = useState(false)
+    const [selectedCardIndex, setSelectedCardIndex] = useState(0);
+    const [cards, setCards] = useState([]);
+    const [isFlipped, handleFlip] = useState(false);
+    const [correctAnswers, setCorrectAnswers] = useState(0);
+    const [isWrong, setIsWrong] = useState(false);
+    const [correctCardIds, setCorrectCardIds] = useState([]);
+    const { values, handleChange, handleSubmit, setValues } = useForm(submitAnswer);
 
-    useEffect(() => {getCardsInCollection(props.collectionId)}, [props.collectionId])
+    useEffect(() => {getCardsInCollection(props.collectionId)}, [props.collectionId]);
+
+    function submitAnswer(){
+        if (values.answer === cards[selectedCardIndex].definition) {
+            setCorrectAnswers(correctAnswers + 1);
+            let tempCorrectCards = correctCardIds.slice();
+            tempCorrectCards.push(cards[selectedCardIndex].id);
+            setCorrectCardIds(tempCorrectCards);
+        }
+        else {
+            setIsWrong(true);
+            setTimeout(() => {setIsWrong(false)}, 3000);
+        }
+    }
 
     let getCardsInCollection = async (collectionId) => {
         let response = await axios.get(`http://127.0.0.1:8000/flashcards/investigate_collection/${collectionId}`);
@@ -85,7 +104,21 @@ const CardsCarousel = (props) => {
                                     </div>
                                     <div className='jumbotron'>
                                         <h6>{cards[selectedCardIndex].word}</h6>
-                                        <Button variant='success' onClick={()=> handleFlip(true)}>Flip</Button>
+                                        {correctCardIds.includes(cards[selectedCardIndex].id) ? 
+                                        <p>Great job! {correctAnswers}/{cards.length} correct answers submitted.</p> 
+                                        : 
+                                        <React.Fragment>
+                                            <Form onSubmit={handleSubmit}>
+                                                <Form.Group className='w-50 mx-auto' controlId="answer">
+                                                    <Form.Control type="text" name='answer' onChange={handleChange} value={values.answer} required={true}/>
+                                                </Form.Group>
+                                                <Button size='sm' className='mb-2' type='submit' variant="primary">Check Answer</Button>
+                                            </Form>
+                                        </React.Fragment>
+                                        }
+                                        {isWrong ? <p>Not quite, try again!</p> : ''}
+                                        {correctAnswers === cards.length ? <p>Refresh or go back to collections to try again.</p> : ''}
+                                        <Button variant='success' onClick={()=> handleFlip(true)}>Flip Card</Button>
                                     </div>
                                     <div className='row'>
                                         <div className='col text-left'>
@@ -104,7 +137,7 @@ const CardsCarousel = (props) => {
                                 <Card.Body>
                                     <div className='jumbotron'>
                                         <p>{cards[selectedCardIndex].definition}</p>
-                                        <Button variant='success' onClick={() => handleFlip(false)}>Flip</Button>
+                                        <Button variant='success' onClick={() => handleFlip(false)}>Flip Card</Button>
                                     </div>
                                 </Card.Body>
                             </Card>

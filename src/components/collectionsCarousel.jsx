@@ -28,8 +28,7 @@ const CollectionsCarousel = (props) => {
     let deleteCollection = async (id) => {
         if (window.confirm('Are you sure? All cards in this collection will be deleted.')){
             try{
-                let response = await axios.delete(`http://127.0.0.1:8000/flashcards/collections/info/${id}`);
-                console.log(response);
+                await axios.delete(`http://127.0.0.1:8000/flashcards/collections/info/${id}`);
                 setSelectedIndex(0);
                 props.refresh();
             }

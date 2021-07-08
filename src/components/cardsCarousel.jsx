@@ -23,13 +23,13 @@ const CardsCarousel = (props) => {
     function submitAnswer(){
         if (values.answer === cards[selectedCardIndex].definition) {
             setCorrectAnswers(correctAnswers + 1);
+            setIsWrong(false);
             let tempCorrectCards = correctCardIds.slice();
             tempCorrectCards.push(cards[selectedCardIndex].id);
             setCorrectCardIds(tempCorrectCards);
         }
         else {
             setIsWrong(true);
-            setTimeout(() => {setIsWrong(false)}, 3000);
         }
     }
 
@@ -105,19 +105,31 @@ const CardsCarousel = (props) => {
                                     <div className='jumbotron'>
                                         <h6>{cards[selectedCardIndex].word}</h6>
                                         {correctCardIds.includes(cards[selectedCardIndex].id) ? 
-                                        <p>Great job! {correctAnswers}/{cards.length} correct answers submitted.</p> 
+                                        <div>
+                                            <p>Great job! {correctAnswers}/{cards.length} correct answers submitted.</p> 
+                                            {correctAnswers !== cards.length ? 
+                                                <Button size='sm' className='mb-2' onClick={() => {goToNextCard()}}>Next Card
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
+                                                        <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                                                    </svg>
+                                                </Button> : '' }
+                                        </div>
                                         : 
                                         <React.Fragment>
                                             <Form onSubmit={handleSubmit}>
                                                 <Form.Group className='w-50 mx-auto' controlId="answer">
                                                     <Form.Control type="text" name='answer' onChange={handleChange} value={values.answer} required={true}/>
                                                 </Form.Group>
+                                                {isWrong ? 
+                                                    <p>Not quite, try again! <Button size='sm' variant='outline-danger' onClick={() => {setIsWrong(false)}}>Clear</Button></p>
+                                                : ''}
                                                 <Button size='sm' className='mb-2' type='submit' variant="primary">Check Answer</Button>
                                             </Form>
                                         </React.Fragment>
                                         }
-                                        {isWrong ? <p>Not quite, try again!</p> : ''}
-                                        {correctAnswers === cards.length ? <p>Refresh or go back to collections to try again.</p> : ''}
+                                        {correctAnswers === cards.length ? <p>Refresh or go back to collections to try again.</p> 
+                                            : 
+                                            ''}
                                         <Button variant='success' onClick={()=> handleFlip(true)}>Flip Card</Button>
                                     </div>
                                     <div className='row'>

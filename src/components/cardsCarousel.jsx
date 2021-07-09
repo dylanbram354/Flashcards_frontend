@@ -16,7 +16,7 @@ const CardsCarousel = (props) => {
     const [correctAnswers, setCorrectAnswers] = useState(0);
     const [isWrong, setIsWrong] = useState(false);
     const [correctCardIds, setCorrectCardIds] = useState([]);
-    const { values, handleChange, handleSubmit, setValues } = useForm(submitAnswer);
+    const { values, handleChange, handleSubmit } = useForm(submitAnswer);
 
     useEffect(() => {getCardsInCollection(props.collectionId)}, [props.collectionId]);
 
